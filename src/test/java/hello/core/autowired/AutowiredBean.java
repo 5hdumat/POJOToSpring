@@ -1,5 +1,7 @@
 package hello.core.autowired;
 
-@MyIncludeComponent
+import org.springframework.stereotype.Component;
+
+@Component
 public class AutowiredBean {
 }

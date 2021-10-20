@@ -1,20 +1,13 @@
 package hello.core.autowired;
 
-import hello.core.AppConfig;
 import hello.core.member.Member;
-import hello.core.member.MemberService;
-import hello.core.order.OrderService;
-import hello.core.scan.filter.BeanA;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -26,9 +19,8 @@ public class AutowiredTest {
         System.out.println("autowiredBean = " + autowiredBean);
     }
 
-    @Configuration
     @ComponentScan(
-            includeFilters = @ComponentScan.Filter(classes = MyIncludeComponent.class)
+            basePackages = "hello.core.autowired"
     )
     static class TestBean {
         @Autowired(required = false)

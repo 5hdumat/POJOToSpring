@@ -1,6 +1,7 @@
 package hello.core;
 
 import hello.core.discount.DiscountPolicy;
+import hello.core.discount.FixDiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
@@ -9,6 +10,8 @@ import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
 
 @Configuration
 public class AppConfig {
@@ -32,7 +35,12 @@ public class AppConfig {
     }
 
     @Bean
-    public DiscountPolicy discountPolicy() {
-        return new RateDiscountPolicy();
+    public HashMap<String, DiscountPolicy> discountPolicy() {
+        HashMap<String, DiscountPolicy> DiscountPolicyHashMap = new HashMap<>();
+
+        DiscountPolicyHashMap.put("fixDiscountPolicy", new FixDiscountPolicy());
+        DiscountPolicyHashMap.put("rateDiscountPolicy", new RateDiscountPolicy());
+
+        return DiscountPolicyHashMap;
     }
 }

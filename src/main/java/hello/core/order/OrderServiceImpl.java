@@ -8,22 +8,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 //@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository;
-    private final DiscountPolicy discountPolicy;
+    private final Map<String, DiscountPolicy> discountPolicyMap;
 
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, Map<String, DiscountPolicy> discountPolicyMap) {
         this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
+        this.discountPolicyMap = discountPolicyMap;
     }
 
     @Override
-    public Order createOrder(Long memberId, String itemName, int itemPrice) {
+    public Order createOrder(Long memberId, String itemName, int itemPrice, String discountCode) {
         Member member = memberRepository.findById(memberId);
-        int discountPrice = discountPolicy.discount(member, itemPrice);
+        int discountPrice = discountPolicyMap.get(discountCode).discount(member, itemPrice);
 
         return new Order(memberId, itemName, itemPrice, discountPrice);
     }
